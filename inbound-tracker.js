@@ -1,7 +1,7 @@
 function oitCookie() {
     var currentPage, query;
 	
-	if (jQuery.cookie('leadsource')) {
+	if (jQuery.cookie('medium')) {
 	}
 	else { 
 		var utm_medium = "";
@@ -28,29 +28,29 @@ function oitCookie() {
 			gclid = query["gclid"];
 		}		
 
-        var leadsource = "";
-        var leadsourcedetails = "";		
+        var medium = "";
+        var source = "";		
 		
 		if (gclid != "") {
-           leadsource = "Paid Search";
-           leadsourcedetails = "Google Adwords";
+           medium = "Paid Search";
+           source = "Google Adwords";
         }
 		else {
 			if (utm_medium != "") {
-                if ((utm_medium == "paidsearch") || (utm_medium == "cpc") || (utm_medium == "ppc")) {
-                   leadsource = "Paid Search";
+                if (utm_medium == "paidsearch") {
+                   medium = "Paid Search";
                 }
                 else {
-                   leadsource = Correct_String(utm_medium);
+                   medium = Correct_String(utm_medium);
                 }
-				addToCookieSource(leadsource);
+				addToCookieSource(medium);
             }
             else {
                 trackReferrerSource(new URI(document.referrer).domain());
             }
 			if (utm_source != "")  {
-                leadsourcedetails = Correct_String(utm_source);
-				addToCookieSourceDetails(leadsourcedetails)
+                source = Correct_String(utm_source);
+				addToCookieSourceDetails(source)
             }
             else {
                 trackReferrerSourceDetails(new URI(document.referrer).domain());
@@ -65,14 +65,16 @@ function Correct_String(str) {
 	return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
+/* Make sure you replace utm-builder.com with your own domain */
 function addToCookieSource (source) {
-	var COOKIE_OPTS = { expires: 14, path: '/', domain: 'observeit.com' };
-    jQuery.cookie('leadsource', source, COOKIE_OPTS);
+	var COOKIE_OPTS = { expires: 14, path: '/', domain: 'utm-builder.com' };
+    jQuery.cookie('medium', source, COOKIE_OPTS);
 }
 
+/* Make sure you replace utm-builder.com with your own domain */
 function addToCookieSourceDetails(details) {
-	var COOKIE_OPTS = { expires: 14, path: '/', domain: 'observeit.com' };
-    jQuery.cookie('leadsourcedetails', details, COOKIE_OPTS);
+	var COOKIE_OPTS = { expires: 14, path: '/', domain: 'utm-builder.com' };
+    jQuery.cookie('source', details, COOKIE_OPTS);
 }	
 
 
